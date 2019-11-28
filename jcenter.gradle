@@ -1,0 +1,31 @@
+boolean DEBUG = false
+if (DEBUG) {
+// 生成maven配置
+    apply from: 'maven.gradle'
+
+// 生成JavaDocs
+    apply from: 'javadocs.gradle'
+
+// 上传到bintray的配置
+    apply from: 'bintray.gradle'
+} else {
+// 生成maven配置
+    apply from: 'https://github.com/tgcityPlum/bintray/blob/master/maven.gradle'
+
+// 生成JavaDocs
+    apply from: 'https://github.com/tgcityPlum/bintray/blob/master/javadocs.gradle'
+
+// 上传到bintray的配置
+    apply from: 'https://github.com/tgcityPlum/bintray/blob/master/bintray.gradle'
+
+}
+
+
+task jcenter {
+    doLast {
+        println "Release ${version}"
+    }
+}
+
+jcenter.dependsOn(install)
+jcenter.dependsOn(bintrayUpload)
